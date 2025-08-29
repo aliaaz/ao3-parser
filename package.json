@@ -1,0 +1,14 @@
+{
+  "name": "expressjsapp",
+  "version": "1.0.0",
+  "description": "quickstart expressjs",
+  "main": "app.js",
+  "scripts": {
+    "dev": "node app.js"
+  },
+  "author": "alia",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}

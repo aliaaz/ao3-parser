@@ -1,10 +1,13 @@
 const express = require('express')
-const app = express()
-const port = 3000
+const packageInfo = require('./package.json');
 const { getWorkFromId } = require("./dist"); // import compiled TS
 
+const app = express()
+const port = 3000
+const appVersion = packageInfo.version;
+
 app.get('/', (req, res) => {
-  res.send('express.js v1.0.0-a.0.1')
+  res.send('AO3 Parser | express.js v' + appVersion)
 })
 
 app.get("/work/:id", async (req, res) => {

@@ -1,6 +1,6 @@
 {
-  "name": "expressjsapp",
-  "version": "1.0.0",
+  "name": "ao3-parser",
+  "version": "1.0.0-a.1.0",
   "description": "quickstart expressjs",
   "main": "app.js",
   "scripts": {

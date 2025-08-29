@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "AO3 parser using expressjs and typescript.",
   "main": "app.js",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "dev": "node app.js",
     "compile-ts": "npx tsc"

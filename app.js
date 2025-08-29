@@ -1,10 +1,20 @@
 const express = require('express')
 const app = express()
 const port = 3000
+const { getWorkFromId } = require("./dist"); // import compiled TS
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('express.js v1.0.0-a.0.1')
 })
+
+app.get("/work/:id", async (req, res) => {
+  try {
+    const work = await getWorkFromId(Number(req.params.id));
+    res.json(work);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 app.listen(port, () => {
   console.log(`🚀 Server ready at: http://localhost:${port}`)

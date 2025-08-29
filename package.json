@@ -4,7 +4,8 @@
   "description": "quickstart expressjs",
   "main": "app.js",
   "scripts": {
-    "dev": "node app.js"
+    "dev": "node app.js",
+    "compile-ts": "npx tsc"
   },
   "author": "alia",
   "license": "ISC",

@@ -2,10 +2,30 @@ const express = require('express')
 const packageInfo = require('./package.json');
 const { getWorkFromId } = require("./dist"); // import compiled TS
 const { rateLimit } = require('express-rate-limit')
+const cors = require('cors')
+require('dotenv').config()
 
 const app = express()
-const port = 3000
+const PORT = process.env.PORT || 3000
 const appVersion = packageInfo.version;
+
+// Get allowed origins from environment variable
+const allowedOrigins = process.env.FRONTEND_URLS
+  ? process.env.FRONTEND_URLS.split(',').map(origin => origin.trim())
+  : []
+
+// CORS configuration
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (Postman, curl, etc.)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true)
+    } else {
+      callback(new Error(`CORS policy: ${origin} is not allowed`))
+    }
+  },
+  optionsSuccessStatus: 200
+}
 
 const limiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute
@@ -14,7 +34,10 @@ const limiter = rateLimit({
 	legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
 	ipv6Subnet: 56, // Set to 60 or 64 to be less aggressive, or 52 or 48 to be more aggressive
 })
+
 app.use(limiter)
+app.use(cors(corsOptions))
+app.use(express.json())
 
 app.get('/', (req, res) => {
   res.send('AO3 Parser | express.js v' + appVersion)
@@ -29,6 +52,4 @@ app.get("/work/:id", async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`🚀 Server ready at: http://localhost:${port}`)
-})
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`))

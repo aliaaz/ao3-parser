@@ -18,6 +18,8 @@ export class FanficWork {
     // public language: string = '';
 
     public published: string = '';
+    public updated: string = '';
+    public completed: string = '';
     public words: number = 0;
     public chapters: number = 0;
     public maxChapters: number | undefined;
@@ -74,6 +76,17 @@ export class FanficWork {
             this.chapters = chapter!;
             this.maxChapters = maxChapters;
 
+            if ($('dd.status').length !== 0) {
+                if (this.maxChapters && this.maxChapters == this.chapters) {
+                    this.status = WorkProgress.COMPLETE_WORK;
+                    this.completed = $('dd.status').text().trim();
+                } else {
+                    this.status = WorkProgress.IN_PROGRESS;
+                    this.updated = $('dd.status').text().trim();
+                }
+            } else {
+                this.status = WorkProgress.COMPLETE_WORK;
+            }
             // if ($('dd.comments').length !== 0) {
             //     this.commentsCount = parseInt($('dd.comments').text().replaceAll(",", "").trim());
             // }

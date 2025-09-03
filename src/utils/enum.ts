@@ -18,5 +18,5 @@ export enum ArchiveWarning {
 export enum WorkProgress {
     NONE = '',
     IN_PROGRESS = 'Work in Progress',
-    COMPLETE_WORK = 'Complete Work'
+    COMPLETE_WORK = 'Complete'
 }

@@ -12,10 +12,10 @@ const appVersion = packageInfo.version;
 // If you’re behind a proxy (Railway/Render/Heroku/Cloudflare/Nginx/etc.),
 // trust it so req.ip uses X-Forwarded-For correctly.
 // Use a hop count if you know it (e.g. 1 for single proxy). Fall back to true if unsure.
-// const PROXY_HOPS = Number(process.env.PROXY_HOPS ?? 1);
-// if (process.env.NODE_ENV === 'production') {
-//   app.set('trust proxy', Number.isFinite(PROXY_HOPS) ? PROXY_HOPS : true);
-// }
+const PROXY_HOPS = Number(process.env.PROXY_HOPS ?? 1);
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', Number.isFinite(PROXY_HOPS) ? PROXY_HOPS : true);
+}
 
 // Get allowed origins from environment variable
 const allowedOrigins = process.env.FRONTEND_URLS
@@ -43,7 +43,7 @@ const limiter = rateLimit({
 	ipv6Subnet: 56, // Set to 60 or 64 to be less aggressive, or 52 or 48 to be more aggressive
 })
 
-// app.use(limiter)
+app.use(limiter)
 app.use(cors(corsOptions))
 app.use(express.json())
 

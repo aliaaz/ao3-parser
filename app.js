@@ -1,13 +1,21 @@
 const express = require('express')
 const packageInfo = require('./package.json');
 const { getWorkFromId } = require("./dist"); // import compiled TS
-const { rateLimit } = require('express-rate-limit')
+const rateLimit = require('express-rate-limit')
 const cors = require('cors')
 require('dotenv').config()
 
 const app = express()
 const PORT = process.env.PORT || 3000
 const appVersion = packageInfo.version;
+
+// If you’re behind a proxy (Railway/Render/Heroku/Cloudflare/Nginx/etc.),
+// trust it so req.ip uses X-Forwarded-For correctly.
+// Use a hop count if you know it (e.g. 1 for single proxy). Fall back to true if unsure.
+const PROXY_HOPS = Number(process.env.PROXY_HOPS ?? 1);
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', Number.isFinite(PROXY_HOPS) ? PROXY_HOPS : true);
+}
 
 // Get allowed origins from environment variable
 const allowedOrigins = process.env.FRONTEND_URLS

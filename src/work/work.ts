@@ -88,6 +88,9 @@ export class FanficWork {
                 }
             } else {
                 this.status = WorkProgress.COMPLETE_WORK;
+                if (this.maxChapters && this.maxChapters == this.chapters) {
+                    this.completed = this.published;
+                }
             }
             // if ($('dd.comments').length !== 0) {
             //     this.commentsCount = parseInt($('dd.comments').text().replaceAll(",", "").trim());
